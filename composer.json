@@ -1,0 +1,21 @@
+{
+    "name": "magetest/magento",
+    "description": "Latest Magento community version stable releases",
+    "keywords": ["magento", "community", "1.x", "stable"],
+    "homepage": "http://www.magentocommerce.com",
+    "license": ["OSL-3.0","AFL-3.0"],
+    "authors": [
+        {
+            "name": "Alistair Stead",
+            "email": "astead@sessiondigital.com"
+        },
+        {
+            "name": "Marco De Bortoli",
+            "email": "marco.debortoli@sessiondigital.com"
+        },
+        {
+            "name": "Other contributors",
+            "homepage": "https://github.com/MageTest/contributors/contributors"
+        }
+    ]
+}
