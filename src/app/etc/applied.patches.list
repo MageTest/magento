@@ -1,0 +1,7 @@
+-e -n 2014-05-23 10:33:38 UTC | SUPEE-2629 | EE_1.12.0.0 | v1 | 5de775cf535e137b0b099d8066bd5b3a81f7ec4c | Wed Dec 11 16:50:40 2013 +0200 | v1.12.0.0..HEAD
+patching file app/code/core/Mage/Catalog/Model/Product.php
+patching file app/code/core/Mage/Core/Controller/Varien/Router/Standard.php
+patching file app/code/core/Mage/Install/etc/config.xml
+patching file app/code/core/Zend/Pdf/FileParserDataSource.php
+
+
