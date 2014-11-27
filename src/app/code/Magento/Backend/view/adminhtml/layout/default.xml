@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @copyright   Copyright (c) 2014 X.commerce, Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Magento Admin</title>
+        <link src="prototype/prototype.js"/>
+        <link src="prototype/window.js"/>
+        <link src="scriptaculous/builder.js"/>
+        <link src="scriptaculous/effects.js"/>
+        <link src="lib/ccard.js"/>
+        <link src="prototype/validation.js"/>
+        <link src="varien/js.js"/>
+        <link src="mage/adminhtml/varienLoader.js"/>
+        <link src="mage/adminhtml/tools.js"/>
+        <link src="lib/ds-sleight.js" ie_condition="lt IE 7" defer="defer"/>
+        <css src="mage/calendar.css"/>
+        <link src="requirejs/require.js"/>
+        <link src="mage/requirejs/resolver.js"/>
+        <link src="jquery/jquery-1.8.2.js"/>
+        <link src="mage/jquery-no-conflict.js"/>
+        <link src="app-config.js"/>
+        <link src="extjs/ext-tree.js"/>
+        <link src="extjs/ext-tree-checkbox.js"/>
+        <css src="extjs/resources/css/ext-all.css"/>
+        <css src="extjs/resources/css/ytheme-magento.css"/>
+        <link src="Magento_Rule::rules.js"/>
+    </head>
+    <body>
+        <attribute name="id" value="html-body"/>
+        <block name="require.js" class="Magento\Backend\Block\Page\RequireJs" template="Magento_Backend::page/js/require_js.phtml"/>
+        <referenceContainer name="global.notices">
+            <block class="Magento\Backend\Block\Page\Notices" name="global_notices" as="global_notices" template="page/notices.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="header">
+            <block class="Magento\Backend\Block\Page\Header" name="logo" before="-">
+                <arguments>
+                    <argument name="show_part" xsi:type="string">logo</argument>
+                    <argument name="edition" translate="true" xsi:type="string">Community Edition</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Backend\Block\GlobalSearch" as="search" after="logo" acl="Magento_Adminhtml::global_search"/>
+            <block class="Magento\Backend\Block\Page\Header" name="user" after="-">
+                <arguments>
+                    <argument name="show_part" xsi:type="string">user</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="page.menu">
+            <block class="Magento\Backend\Block\Menu" name="menu" as="menu" template="Magento_Backend::menu.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="page.breadcrumbs">
+            <block class="Magento\Backend\Block\Widget\Breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
+        </referenceContainer>
+        <referenceContainer name="page.formkey">
+            <block class="Magento\Backend\Block\Admin\Formkey" name="formkey" as="formkey" template="Magento_Backend::admin/formkey.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="page.js.translate">
+            <block class="Magento\Framework\View\Element\Template" name="js_translate" as="js_translate" template="Magento_Backend::page/js/translate.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="main.top">
+            <block class="Magento\Theme\Block\Html\Title" name="page-title" template="title.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="page.messages">
+            <block class="Magento\Framework\View\Element\Messages" name="messages" as="messages"/>
+        </referenceContainer>
+        <referenceContainer name="page.main.actions">
+            <block class="Magento\Framework\View\Element\Template" name="page.actions.toolbar" template="Magento_Backend::pageactions.phtml" after="-"/>
+        </referenceContainer>
+        <referenceContainer name="footer">
+            <block class="Magento\Backend\Block\Page\Locale" name="locale.switcher" template="Magento_Backend::page/locale.phtml"/>
+            <container name="legal" htmlTag="div" htmlClass="footer-legal">
+                <block class="Magento\Backend\Block\Page\Copyright" name="copyright" as="copyright"/>
+                <block class="Magento\Backend\Block\Page\Footer" name="version" as="version">
+                    <arguments>
+                        <argument name="bugreport_url" xsi:type="string">http://www.magentocommerce.com/bug-tracking</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="backend.page">
+            <block class="Magento\Framework\View\Element\Template" name="page.loader" template="Magento_Backend::admin/loader.phtml" after="-"/>
+        </referenceContainer>
+        <referenceContainer name="after.body.start">
+            <block class="Magento\RequireJs\Block\Html\Head\Config" name="requirejs-config"/>
+            <block class="Magento\Translation\Block\Js" name="translate" template="Magento_Translation::translate.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" name="head.scripts" template="Magento_Backend::page/js/head_scripts.phtml"/>
+            <block class="Magento\Framework\View\Element\Js\Components" name="head.components" as="components" template="Magento_Backend::page/js/components.phtml"/>
+            <block class="Magento\Framework\View\Element\Html\Calendar" name="head.calendar" as="calendar" template="Magento_Backend::page/js/calendar.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

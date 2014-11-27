@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @copyright   Copyright (c) 2014 X.commerce, Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Magento\Sales\Service\V1\OrderReadInterface" type="Magento\Sales\Service\V1\OrderRead"/>
+    <preference for="Magento\Sales\Service\V1\OrderWriteInterface" type="Magento\Sales\Service\V1\OrderWrite"/>
+    <preference for="Magento\Sales\Service\V1\InvoiceReadInterface" type="Magento\Sales\Service\V1\InvoiceRead"/>
+    <preference for="Magento\Sales\Service\V1\InvoiceWriteInterface" type="Magento\Sales\Service\V1\InvoiceWrite"/>
+    <preference for="Magento\Sales\Service\V1\CreditmemoReadInterface" type="Magento\Sales\Service\V1\CreditmemoRead"/>
+    <preference for="Magento\Sales\Service\V1\CreditmemoWriteInterface" type="Magento\Sales\Service\V1\CreditmemoWrite"/>
+    <preference for="Magento\Sales\Service\V1\ShipmentReadInterface" type="Magento\Sales\Service\V1\ShipmentRead"/>
+    <preference for="Magento\Sales\Service\V1\ShipmentWriteInterface" type="Magento\Sales\Service\V1\ShipmentWrite"/>
+    <preference for="Magento\Sales\Service\V1\TransactionReadInterface" type="Magento\Sales\Service\V1\TransactionRead"/>
+    <type name="Magento\Sales\Model\Resource\Report" shared="false"/>
+    <type name="Magento\Sales\Model\Order\Pdf\Config\Reader">
+        <arguments>
+            <argument name="fileName" xsi:type="string">pdf.xml</argument>
+            <argument name="converter" xsi:type="object">Magento\Sales\Model\Order\Pdf\Config\Converter</argument>
+            <argument name="schemaLocator" xsi:type="object">Magento\Sales\Model\Order\Pdf\Config\SchemaLocator</argument>
+        </arguments>
+    </type>
+    <virtualType name="pdfConfigDataStorage" type="Magento\Framework\Config\Data">
+        <arguments>
+            <argument name="reader" xsi:type="object">Magento\Sales\Model\Order\Pdf\Config\Reader</argument>
+            <argument name="cacheId" xsi:type="string">sales_pdf_config</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Sales\Model\Order\Pdf\Config">
+        <arguments>
+            <argument name="dataStorage" xsi:type="object">pdfConfigDataStorage</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Helper\Product\Flat\Indexer">
+        <arguments>
+            <argument name="flatAttributeGroups" xsi:type="array">
+                <item name="sales_quote_item" xsi:type="string">sales_quote_item</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Module\Updater\SetupFactory">
+        <arguments>
+            <argument name="resourceTypes" xsi:type="array">
+                <item name="sales_setup" xsi:type="string">Magento\Sales\Model\Resource\Setup</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Payment\Model\Checks\SpecificationFactory">
+        <arguments>
+            <argument name="mapping" xsi:type="array">
+                <item name="country" xsi:type="object">Magento\Payment\Model\Checks\CanUseForCountry</item>
+                <item name="currency" xsi:type="object">Magento\Payment\Model\Checks\CanUseForCurrency</item>
+                <item name="checkout" xsi:type="object">Magento\Payment\Model\Checks\CanUseCheckout</item>
+                <item name="internal" xsi:type="object">Magento\Payment\Model\Checks\CanUseInternal</item>
+                <item name="total" xsi:type="object">Magento\Payment\Model\Checks\TotalMinMax</item>
+                <item name="zero_total" xsi:type="object">Magento\Payment\Model\Checks\ZeroTotal</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Model\ActionValidator\RemoveAction">
+        <arguments>
+            <argument name="protectedModels" xsi:type="array">
+                <item name="salesOrder" xsi:type="string">Magento\Sales\Model\Order</item>
+                <item name="salesOrderCreditmemo" xsi:type="string">Magento\Sales\Model\Order\Creditmemo</item>
+                <item name="salesOrderInvoice" xsi:type="string">Magento\Sales\Model\Order\Invoice</item>
+                <item name="salesOrderShipment" xsi:type="string">Magento\Sales\Model\Order\Shipment</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Model\Config\Data">
+        <arguments>
+            <argument name="reader" xsi:type="object">Magento\Sales\Model\Config\Reader\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Controller\OrderInterface">
+        <plugin name="authentication" type="\Magento\Sales\Controller\Order\Plugin\Authentication"/>
+    </type>
+    <type name="Magento\Framework\App\Rss\RssManagerInterface">
+        <arguments>
+            <argument name="dataProviders" xsi:type="array">
+                <item name="order_status" xsi:type="string">Magento\Sales\Model\Rss\OrderStatus</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

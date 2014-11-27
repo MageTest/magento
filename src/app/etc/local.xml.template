@@ -19,48 +19,54 @@
  * versions in the future. If you wish to customize Magento for your
  * needs please refer to http://www.magentocommerce.com for more information.
  *
- * @category   Mage
- * @package    Mage_Core
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @copyright  Copyright (c) 2014 X.commerce, Inc. (http://www.magentocommerce.com)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
+<!-- Basic configuration for Magento application framework. -->
 <config>
-    <global>
-        <install>
-            <date>{{date}}</date>
-        </install>
-        <crypt>
-            <key>{{key}}</key>
-        </crypt>
-        <disable_local_modules>false</disable_local_modules>
-        <resources>
-            <db>
-                <table_prefix>{{db_prefix}}</table_prefix>
-            </db>
-            <default_setup>
-                <connection>
-                    <host>{{db_host}}</host>
-                    <username>{{db_user}}</username>
-                    <password>{{db_pass}}</password>
-                    <dbname>{{db_name}}</dbname>
-                    <initStatements>{{db_init_statemants}}</initStatements>
-                    <model>{{db_model}}</model>
-                    <type>{{db_type}}</type>
-                    <pdoType>{{db_pdo_type}}</pdoType>
-                    <active>1</active>
-                </connection>
-            </default_setup>
-        </resources>
-        <session_save>{{session_save}}</session_save>
-    </global>
-    <admin>
-        <routers>
-            <adminhtml>
-                <args>
-                    <frontName>{{admin_frontname}}</frontName>
-                </args>
-            </adminhtml>
-        </routers>
-    </admin>
+    <install>
+        <!-- Date of installation. Its validity indicates whether an application is installed or not. -->
+        <date>{{date}}</date>
+    </install>
+    <crypt>
+        <!-- Cryptography key, used to encrypt sensitive information. -->
+        <key>{{key}}</key>
+    </crypt>
+    <db>
+        <!-- A prefix to use for names of Magento tables in DB. Helps to avoid table name conflicts, if other
+            applications use same database for storing their own tables. Can be empty. -->
+        <table_prefix>{{db_prefix}}</table_prefix>
+    </db>
+    <connection name="default">
+        <!-- Endpoint to connect to DB backend. For MySQL it can be IP (e.g. 127.0.0.1), domain with
+            optional port (e.g. mysql.example.com or mysql.example.com:3306) or unix socket
+            (e.g. /var/lib/mysql/mysql.sock). -->
+        <host>{{db_host}}</host>
+        <!-- MySQL unix socket as endpoint to DB backend. If used instead of '<host>', then remove
+            the latter one. -->
+        <!-- <unix_socket><![CDATA[/var/lib/mysql/mysql.sock]]></unix_socket> -->
+        <username>{{db_user}}</username>
+        <password>{{db_pass}}</password>
+        <dbName>{{db_name}}</dbName>
+        <!-- Database statements to be executed at DB backend upon connection establishment.
+            For MySQL multiple statements can be entered, if separated with a semicolon. -->
+        <initStatements>{{db_init_statements}}</initStatements>
+        <!-- DB model layer. Used to determine names of resource helpers and
+            specific installs/upgrades for a DB vendor. -->
+        <model>{{db_model}}</model>
+        <adapter>Magento\Framework\Model\Resource\Type\Db\Pdo\Mysql</adapter>
+        <!-- Connection activation. Default connection is last level of fallback, thus
+            it must be always left active.  -->
+        <active>1</active>
+    </connection>
+    <resource name="default_setup" connection="default"/>
+    <!-- Session storage method. Can be 'files' (default), 'db', 'memcache', 'memcached', 'eaccelerator', 'redis' (phpredis). -->
+    <session_save>{{session_save}}</session_save>
+    <!-- Example save path for 'redis', but can also be used for other session storage types such as 'files' -->
+    <!--<session_save_path><![CDATA[tcp://127.0.0.1:6379?timeout=2.5]]></session_save_path> -->
+    <backend>
+        <!-- Routing path of a backend area. Any string like 'backend', 'admin' or whatsoever. -->
+        <frontName>{{backend_frontname}}</frontName>
+    </backend>
 </config>

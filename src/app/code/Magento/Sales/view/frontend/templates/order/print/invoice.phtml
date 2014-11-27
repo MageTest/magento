@@ -1,0 +1,112 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @copyright   Copyright (c) 2014 X.commerce, Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $_order = $this->getOrder() ?>
+<?php $_invoice = $this->getInvoice() ?>
+<?php if ($_invoice): ?>
+<?php $_invoices = array($_invoice); ?>
+<?php else: ?>
+<?php $_invoices = $_order->getInvoiceCollection() ?>
+<?php endif; ?>
+<?php foreach ($_invoices as $_invoice): ?>
+<div class="order-details-items invoice">
+    <div class="order-title">
+        <strong><?php echo __('Invoice #') ?><?php echo $_invoice->getIncrementId(); ?></strong>
+    </div>
+    <div class="table-wrapper table-order-items invoice">
+        <table class="data table table-order-items invoice" id="my-invoice-table-<?php echo $_invoice->getId(); ?>">
+            <caption class="table-caption"><?php echo __('Items Invoiced') ?></caption>
+            <thead>
+            <tr>
+                <th class="col name"><?php echo __('Product Name') ?></th>
+                <th class="col sku"><?php echo __('SKU') ?></th>
+                <th class="col price"><?php echo __('Price') ?></th>
+                <th class="col qty"><?php echo __('Qty Invoiced') ?></th>
+                <th class="col subtotal"><?php echo __('Subtotal') ?></th>
+            </tr>
+            </thead>
+            <tfoot>
+                <?php echo $this->getInvoiceTotalsHtml($_invoice)?>
+            </tfoot>
+            <?php $_items = $_invoice->getItemsCollection(); ?>
+            <?php $_count = $_items->count(); ?>
+            <?php foreach ($_items as $_item): ?>
+            <?php if ($_item->getOrderItem()->getParentItem()) continue; ?>
+            <tbody>
+                <?php echo $this->getItemHtml($_item) ?>
+            </tbody>
+            <?php endforeach; ?>
+        </table>
+    </div>
+    <div class="block block-order-details-view">
+        <div class="block-title">
+            <strong><?php echo __('Order Information') ?></strong>
+        </div>
+        <div class="block-content">
+        <?php if (!$_order->getIsVirtual()): ?>
+            <div class="box box-order-shipping-address">
+                <div class="box-title">
+                    <strong><?php echo __('Shipping Address') ?></strong>
+                </div>
+                <div class="box-content">
+                    <?php $_shipping = $_invoice->getShippingAddress() ?>
+                    <address><?php echo $_shipping->format('html') ?></address>
+                </div>
+            </div>
+
+            <div class="box box-order-shipping-method">
+                <div class="box-title">
+                    <strong><?php echo __('Shipping Method') ?></strong>
+                </div>
+                <div class="box-content">
+                    <?php if ($_order->getShippingDescription()): ?>
+                        <?php echo $this->escapeHtml($_order->getShippingDescription()) ?>
+                    <?php else: ?>
+                        <?php echo __('No shipping information available'); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+            <div class="box box-order-billing-address">
+                <div class="box-title">
+                    <strong><?php echo __('Billing Address') ?></strong>
+                </div>
+                <div class="box-content">
+                    <?php $_billing = $_invoice->getbillingAddress() ?>
+                    <address><?php echo $_order->getBillingAddress()->format('html') ?></address>
+                </div>
+            </div>
+
+            <div class="box box-order-billing-method">
+                <div class="box-title">
+                    <strong><?php echo __('Payment Method') ?></strong>
+                </div>
+                <div class="box-content">
+                    <?php echo $this->getPaymentInfoHtml() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>

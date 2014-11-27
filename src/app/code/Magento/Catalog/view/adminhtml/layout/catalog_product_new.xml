@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @copyright   Copyright (c) 2014 X.commerce, Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="jquery/fileUploader/css/jquery.fileupload-ui.css"/>
+        <css src="Magento_Catalog::catalog/category-selector.css"/>
+        <css src="Magento_Catalog::product/product.css"/>
+        <link src="Magento_Catalog::js/bootstrap/product-new.js"/>
+    </head>
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Adminhtml\Product\Edit" name="product_edit">
+                <container name="product-type-tabs" label="Tabs">
+            </container>
+            </block>
+            <block class="Magento\Catalog\Block\Adminhtml\Product\Edit\AttributeSet" name="attribute-set-info" template="Magento_Catalog::catalog/product/edit/attribute_set.phtml"/>
+            <block class="Magento\Catalog\Block\Adminhtml\Product\Edit\NewCategory" name="new-category" template="Magento_Catalog::catalog/product/edit/category/new/form.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Magento\Catalog\Block\Adminhtml\Product\Edit\Tabs" name="product_tabs">
+                <block class="Magento\Backend\Block\Widget\Tab" name="product_tabs.customer_options" as="customer_options">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Custom Options</argument>
+                        <argument name="url" xsi:type="url" path="catalog/*/options">
+                            <param name="_current">1</param>
+                        </argument>
+                        <argument name="class" xsi:type="string">ajax</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Alerts" name="product_tabs.product-alerts" as="product-alerts">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Product Alerts</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="js">
+            <block class="Magento\Catalog\Block\Adminhtml\Product\Edit\Js" name="catalog_product_js" template="catalog/product/js.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" template="Magento_Catalog::catalog/wysiwyg/js.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

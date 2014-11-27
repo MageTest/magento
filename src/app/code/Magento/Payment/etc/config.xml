@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @copyright   Copyright (c) 2014 X.commerce, Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Core/etc/config.xsd">
+    <default>
+        <payment>
+            <free>
+                <active>1</active>
+                <model>Magento\Payment\Model\Method\Free</model>
+                <order_status>pending</order_status>
+                <title>No Payment Information Required</title>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </free>
+            <substitution>
+                <active>0</active>
+                <model>Magento\Payment\Model\Method\Substitution</model>
+                <allowspecific>0</allowspecific>
+            </substitution>
+        </payment>
+    </default>
+</config>
